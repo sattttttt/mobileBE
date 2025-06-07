@@ -1,5 +1,11 @@
+substitutions: 
+ _ENV: gs://h-03-451207.appspot.com/notes/.env
+
 steps:
   # 1. Build Docker image untuk backend
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "${_ENV}", "backend/.env"]
+
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/travel-assistent", "."]
     dir: "backend"
