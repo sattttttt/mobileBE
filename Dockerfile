@@ -1,12 +1,6 @@
 FROM node:20-alpine
 WORKDIR /app
-
-# Install dependencies pertama untuk caching
-COPY package*.json ./
-RUN npm install --production
-
-# Copy aplikasi
 COPY . .
-
+RUN npm install
 EXPOSE 3000
 CMD ["node", "index.js"]
