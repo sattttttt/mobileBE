@@ -1,5 +1,5 @@
 substitutions: 
- _ENV: gs://h-03-451207.appspot.com/notes/.env
+ _ENV: gs://h-03-451207.appspot.com/mobileBE/.env
 
 steps:
   # 1. Build Docker image untuk backend
