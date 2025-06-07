@@ -4,7 +4,7 @@ substitutions:
 steps:
   # 1. Build Docker image untuk backend
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "${_ENV}", "backend/.env"]
+    args: ["cp", "${_ENV}", ".env"]
 
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/travel-assistent", "."]
