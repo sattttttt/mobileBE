@@ -2,8 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors'; // <-- 1. Impor paket cors
 import sequelize from './config/database.js';
-import scheduleRoutes from './routes/scheduleRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import scheduleRoutes from './routes/scheduleRoute.js';
+import userRoutes from './routes/userRoute.js';
 
 // Inisialisasi aplikasi Express
 const app = express();
