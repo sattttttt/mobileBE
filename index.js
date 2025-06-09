@@ -1,16 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import cors from 'cors'; // <-- 1. Impor paket cors
+import cors from 'cors';
 import sequelize from './config/database.js';
 import scheduleRoutes from './routes/scheduleRoute.js';
 import userRoutes from './routes/userRoute.js';
 
 // Inisialisasi aplikasi Express
 const app = express();
-const PORT = process.env.PORT || 8080; // Gunakan 8080 untuk cloud deployment
+const PORT = process.env.PORT || 8080;
 
 // --- Middleware ---
-app.use(cors()); // <-- 2. Gunakan cors sebagai middleware. WAJIB diletakkan sebelum rute.
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,6 +24,7 @@ app.use('/api', userRoutes);
 // Sinkronisasi database dan jalankan server
 const startServer = async () => {
   try {
+    // KEMBALIKAN SEPERTI SEMULA (tanpa alter: true)
     await sequelize.sync();
     console.log('Database & tabel berhasil disinkronkan. ✅');
     app.listen(PORT, () => {

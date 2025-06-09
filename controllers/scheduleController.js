@@ -3,16 +3,19 @@ import Schedule from '../models/schedule.js';
 // Membuat jadwal baru untuk user tertentu dari URL
 export const createScheduleForUser = async (req, res) => {
   try {
-    // Ambil user ID dari parameter URL, bukan dari body
     const { userId } = req.params;
-    const { title, description, start_time, end_time } = req.body;
+    // --- PERUBAHAN DI SINI: Ambil field baru dari body ---
+    const { title, description, start_time, end_time, location, latitude, longitude } = req.body;
 
     const newSchedule = await Schedule.create({
       title,
       description,
       start_time,
       end_time,
-      user_id: userId // Masukkan user_id dari URL secara otomatis
+      location,     // <-- Simpan ke database
+      latitude,     // <-- Simpan ke database
+      longitude,    // <-- Simpan ke database
+      user_id: userId
     });
     res.status(201).json({ message: 'Jadwal berhasil dibuat.', schedule: newSchedule });
   } catch (error) {
@@ -20,24 +23,23 @@ export const createScheduleForUser = async (req, res) => {
   }
 };
 
-// Mendapatkan semua jadwal milik user tertentu dari URL
+// Fungsi lain tidak perlu diubah
 export const getAllSchedulesForUser = async (req, res) => {
   try {
     const { userId } = req.params;
     const schedules = await Schedule.findAll({ where: { user_id: userId } });
+    if (schedules.length === 0) {
+      return res.status(200).json([]);
+    }
     res.status(200).json(schedules);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Memperbarui sebuah jadwal
 export const updateSchedule = async (req, res) => {
     try {
-        // Kita butuh ID jadwal dari params
         const { scheduleId } = req.params;
-
-        // Update data dari body
         const [updated] = await Schedule.update(req.body, {
             where: { id: scheduleId }
         });
@@ -52,7 +54,6 @@ export const updateSchedule = async (req, res) => {
     }
 };
 
-// Menghapus sebuah jadwal
 export const deleteSchedule = async (req, res) => {
     try {
         const { scheduleId } = req.params;

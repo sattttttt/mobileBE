@@ -8,7 +8,6 @@ const Schedule = sequelize.define('Schedule', {
     autoIncrement: true,
     primaryKey: true
   },
-  // Foreign Key
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -21,6 +20,20 @@ const Schedule = sequelize.define('Schedule', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  // --- TAMBAHAN FIELD BARU ---
+  location: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  latitude: {
+    type: DataTypes.DOUBLE,
+    allowNull: true,
+  },
+  longitude: {
+    type: DataTypes.DOUBLE,
+    allowNull: true,
+  },
+  // -------------------------
   description: {
     type: DataTypes.TEXT,
     allowNull: true
@@ -38,9 +51,7 @@ const Schedule = sequelize.define('Schedule', {
   timestamps: true
 });
 
-// Definisikan relasi: satu User memiliki banyak Schedule
 User.hasMany(Schedule, { foreignKey: 'user_id' });
-// Definisikan relasi: satu Schedule milik satu User
 Schedule.belongsTo(User, { foreignKey: 'user_id' });
 
 export default Schedule;
